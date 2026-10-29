@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>学校教务系统 E-R 图（含特殊化）</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; background:#fafafa; margin:0; padding:20px; }
+  h1 { text-align:center; font-size:22px; }
+  svg { background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.15); display:block; margin:0 auto; }
+  .legend { text-align:center; color:#555; margin-top:12px; font-size:14px; }
+</style>
+</head>
+<body>
+<h1>学校教务系统概念模型 E-R 图</h1>
+<svg width="1500" height="960" viewBox="0 0 1500 960" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .ent  { fill:#dbeafe; stroke:#1d4ed8; stroke-width:2; }
+      .rel  { fill:#fee2e2; stroke:#b91c1c; stroke-width:2; }
+      .attr { fill:#fef9c3; stroke:#a16207; stroke-width:1.5; }
+      .line { stroke:#333; stroke-width:1.5; fill:none; }
+      .isa  { fill:#dcfce7; stroke:#15803d; stroke-width:2; }
+      text  { font-size:16px; text-anchor:middle; dominant-baseline:middle; fill:#111; }
+      .card { font-size:17px; font-weight:bold; fill:#b91c1c; }
+      .isat { font-size:14px; font-weight:bold; fill:#15803d; }
+      .note { fill:#f3f4f6; stroke:#9ca3af; stroke-dasharray:5 4; }
+    </style>
+  </defs>
+
+  <!-- ============ 联系（菱形） ============ -->
+  <!-- 系 -拥有- 班级 1:n -->
+  <polygon class="rel" points="420,110 460,140 420,170 380,140"/>
+  <text x="420" y="140">拥有</text>
+  <line class="line" x1="315" y1="140" x2="380" y2="140"/>
+  <line class="line" x1="460" y1="140" x2="545" y2="140"/>
+  <text class="card" x="345" y="125">1</text>
+  <text class="card" x="510" y="125">n</text>
+
+  <!-- 系 -下设- 教研室 1:n -->
+  <polygon class="rel" points="250,240 290,270 250,300 210,270"/>
+  <text x="250" y="270">下设</text>
+  <line class="line" x1="250" y1="165" x2="250" y2="240"/>
+  <line class="line" x1="250" y1="300" x2="250" y2="375"/>
+  <text class="card" x="268" y="210">1</text>
+  <text class="card" x="268" y="345">n</text>
+
+  <!-- 教研室 -属于- 教员 1:n -->
+  <polygon class="rel" points="250,480 290,510 250,540 210,510"/>
+  <text x="250" y="510">属于</text>
+  <line class="line" x1="250" y1="425" x2="250" y2="480"/>
+  <line class="line" x1="250" y1="540" x2="250" y2="595"/>
+  <text class="card" x="268" y="455">1</text>
+  <text class="card" x="268" y="575">n</text>
+
+  <!-- 班级 -组成- 学生 1:n -->
+  <polygon class="rel" points="615,368 655,398 615,428 575,398"/>
+  <text x="615" y="398">组成</text>
+  <line class="line" x1="611" y1="165" x2="615" y2="368"/>
+  <line class="line" x1="617" y1="428" x2="646" y2="595"/>
+  <text class="card" x="628" y="270">1</text>
+  <text class="card" x="640" y="530">n</text>
+
+  <!-- 学生 -选修- 课程 m:n -->
+  <polygon class="rel" points="880,590 920,620 880,650 840,620"/>
+  <text x="880" y="620">选修</text>
+  <line class="line" x1="715" y1="620" x2="840" y2="620"/>
+  <line class="line" x1="920" y1="620" x2="1090" y2="620"/>
+  <text class="card" x="770" y="605">m</text>
+  <text class="card" x="1045" y="605">n</text>
+  <ellipse class="attr" cx="880" cy="712" rx="50" ry="24"/>
+  <text x="880" y="712">成绩</text>
+  <line class="line" x1="880" y1="650" x2="880" y2="688"/>
+
+  <!-- 教授 -指导- 研究生 1:n -->
+  <polygon class="rel" points="430,815 470,845 430,875 390,845"/>
+  <text x="430" y="845">指导</text>
+  <line class="line" x1="175" y1="844" x2="390" y2="845"/>
+  <line class="line" x1="470" y1="845" x2="685" y2="844"/>
+  <text class="card" x="280" y="830">1</text>
+  <text class="card" x="590" y="830">n</text>
+
+  <!-- ============ 特殊化 ISA（三角形） ============ -->
+  <!-- 教员 → {教授, 其他教员} -->
+  <polygon class="isa" points="250,730 315,795 185,795"/>
+  <text class="isat" x="250" y="768">ISA</text>
+  <line class="line" x1="250" y1="645" x2="250" y2="730"/>
+  <line class="line" x1="185" y1="795" x2="120" y2="822"/>
+  <line class="line" x1="315" y1="795" x2="330" y2="822"/>
+
+  <!-- 学生 → {本科生, 研究生} -->
+  <polygon class="isa" points="650,730 715,795 585,795"/>
+  <text class="isat" x="650" y="768">ISA</text>
+  <line class="line" x1="650" y1="645" x2="650" y2="730"/>
+  <line class="line" x1="585" y1="795" x2="560" y2="822"/>
+  <line class="line" x1="715" y1="795" x2="740" y2="822"/>
+
+  <!-- ============ 实体（矩形） ============ -->
+  <rect class="ent" x="185" y="115" width="130" height="50"/>
+  <text x="250" y="140" style="font-size:18px;font-weight:bold">系</text>
+
+  <rect class="ent" x="545" y="115" width="130" height="50"/>
+  <text x="610" y="140" style="font-size:18px;font-weight:bold">班级</text>
+
+  <rect class="ent" x="185" y="375" width="130" height="50"/>
+  <text x="250" y="400" style="font-size:18px;font-weight:bold">教研室</text>
+
+  <rect class="ent" x="185" y="595" width="130" height="50"/>
+  <text x="250" y="620" style="font-size:18px;font-weight:bold">教员</text>
+
+  <rect class="ent" x="585" y="595" width="130" height="50"/>
+  <text x="650" y="620" style="font-size:18px;font-weight:bold">学生</text>
+
+  <rect class="ent" x="1090" y="595" width="130" height="50"/>
+  <text x="1155" y="620" style="font-size:18px;font-weight:bold">课程</text>
+
+  <!-- 子类实体 -->
+  <rect class="ent" x="65"  y="822" width="110" height="45"/>
+  <text x="120" y="845" style="font-size:17px;font-weight:bold">教授</text>
+  <rect class="ent" x="275" y="822" width="110" height="45"/>
+  <text x="330" y="845" style="font-size:17px">其他教员</text>
+
+  <rect class="ent" x="505" y="822" width="110" height="45"/>
+  <text x="560" y="845" style="font-size:17px">本科生</text>
+  <rect class="ent" x="685" y="822" width="110" height="45"/>
+  <text x="740" y="845" style="font-size:17px;font-weight:bold">研究生</text>
+
+  <!-- ============ 属性（椭圆，下划线为主码） ============ -->
+  <!-- 系 -->
+  <ellipse class="attr" cx="140" cy="40" rx="55" ry="24"/>
+  <text x="140" y="40" style="text-decoration:underline">系编号</text>
+  <line class="line" x1="160" y1="62" x2="200" y2="115"/>
+  <ellipse class="attr" cx="360" cy="40" rx="55" ry="24"/>
+  <text x="360" y="40">系名</text>
+  <line class="line" x1="340" y1="62" x2="295" y2="115"/>
+
+  <!-- 班级 -->
+  <ellipse class="attr" cx="520" cy="40" rx="58" ry="24"/>
+  <text x="520" y="40" style="text-decoration:underline">班级编号</text>
+  <line class="line" x1="545" y1="62" x2="585" y2="115"/>
+  <ellipse class="attr" cx="710" cy="40" rx="55" ry="24"/>
+  <text x="710" y="40">班级名</text>
+  <line class="line" x1="690" y1="62" x2="655" y2="115"/>
+
+  <!-- 教研室 -->
+  <ellipse class="attr" cx="65" cy="340" rx="62" ry="24"/>
+  <text x="65" y="340" style="text-decoration:underline">教研室编号</text>
+  <line class="line" x1="120" y1="352" x2="185" y2="385"/>
+  <ellipse class="attr" cx="65" cy="460" rx="55" ry="24"/>
+  <text x="65" y="460">名称</text>
+  <line class="line" x1="115" y1="448" x2="185" y2="415"/>
+
+  <!-- 教员 -->
+  <ellipse class="attr" cx="60" cy="575" rx="50" ry="24"/>
+  <text x="60" y="575" style="text-decoration:underline">工号</text>
+  <line class="line" x1="105" y1="588" x2="185" y2="600"/>
+  <ellipse class="attr" cx="50" cy="640" rx="50" ry="24"/>
+  <text x="50" y="640">姓名</text>
+  <line class="line" x1="95" y1="640" x2="185" y2="632"/>
+  <ellipse class="attr" cx="60" cy="705" rx="50" ry="24"/>
+  <text x="60" y="705">职称</text>
+  <line class="line" x1="105" y1="692" x2="185" y2="648"/>
+
+  <!-- 学生 -->
+  <ellipse class="attr" cx="480" cy="565" rx="50" ry="24"/>
+  <text x="480" y="565" style="text-decoration:underline">学号</text>
+  <line class="line" x1="525" y1="578" x2="585" y2="600"/>
+  <ellipse class="attr" cx="475" cy="665" rx="50" ry="24"/>
+  <text x="475" y="665">姓名</text>
+  <line class="line" x1="520" y1="655" x2="585" y2="640"/>
+  <ellipse class="attr" cx="760" cy="505" rx="50" ry="24"/>
+  <text x="760" y="505">性别</text>
+  <line class="line" x1="745" y1="527" x2="705" y2="598"/>
+  <ellipse class="attr" cx="775" cy="700" rx="50" ry="24"/>
+  <text x="775" y="700">年龄</text>
+  <line class="line" x1="750" y1="682" x2="706" y2="640"/>
+
+  <!-- 课程 -->
+  <ellipse class="attr" cx="1295" cy="540" rx="55" ry="24"/>
+  <text x="1295" y="540" style="text-decoration:underline">课程号</text>
+  <line class="line" x1="1270" y1="562" x2="1215" y2="595"/>
+  <ellipse class="attr" cx="1405" cy="620" rx="55" ry="24"/>
+  <text x="1405" y="620">课程名</text>
+  <line class="line" x1="1350" y1="620" x2="1220" y2="620"/>
+  <ellipse class="attr" cx="1295" cy="700" rx="50" ry="24"/>
+  <text x="1295" y="700">学分</text>
+  <line class="line" x1="1270" y1="678" x2="1215" y2="645"/>
+
+  <!-- 研究生的属性 -->
+  <ellipse class="attr" cx="740" cy="912" rx="58" ry="24"/>
+  <text x="740" y="912">研究方向</text>
+  <line class="line" x1="740" y1="890" x2="740" y2="867"/>
+
+  <!-- ============ 说明 ============ -->
+  <rect class="note" x="1000" y="60" width="470" height="150"/>
+  <text x="1235" y="90"  style="font-size:14px;fill:#333">特殊化（ISA）说明：</text>
+  <text x="1235" y="118" style="font-size:14px;fill:#333">学生 ⊇ {本科生, 研究生}；教员按职称分为 {教授, 其他教员}。</text>
+  <text x="1235" y="146" style="font-size:14px;fill:#333">“指导”联系仅存在于 教授 与 研究生 两个子类之间（1:n），</text>
+  <text x="1235" y="174" style="font-size:14px;fill:#333">即教授只指导研究生，研究生只由教授指导。</text>
+</svg>
+<div class="legend">矩形 = 实体　|　菱形 = 联系（1、m、n 标注基数）　|　椭圆 = 属性（下划线为主码）　|　绿色三角 = 特殊化（ISA）</div>
+</body>
+</html>
